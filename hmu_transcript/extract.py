@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import contextlib
+import io
 import os
 import shutil
 import subprocess
@@ -53,8 +55,9 @@ def extract_pdf(pdf_path: str | Path, *, ocr: bool = True) -> ExtractedDocument:
         text_parts: list[str] = []
         tables: list[list[list[str | None]]] = []
         for page in doc:
-            text_parts.append(page.get_text("text") or "")
-            tables.extend(_extract_tables(page))
+            with contextlib.redirect_stdout(io.StringIO()):
+                text_parts.append(page.get_text("text") or "")
+                tables.extend(_extract_tables(page))
 
         text = "\n".join(text_parts)
         used_ocr = False

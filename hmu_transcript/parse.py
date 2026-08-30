@@ -182,13 +182,18 @@ def _parse_single_line(line: str) -> Course | None:
     if not course or is_noise(course) or is_category(course):
         return None
     credit = parse_float(match.group("credit"))
-    rest = match.group("rest").strip()
+    rest_tokens = match.group("rest").split()
+    score_tokens: list[str] = []
+    for tok in rest_tokens:
+        if is_year(tok) or is_semester(tok):
+            break
+        score_tokens.append(tok)
     return _course_from_parts(
         course=course,
         category=match.group("category").strip(),
         credit=credit,
-        raw_score_text=rest,
-        extra_tokens=rest.split(),
+        raw_score_text=" ".join(score_tokens) or match.group("rest").strip(),
+        extra_tokens=rest_tokens,
     )
 
 

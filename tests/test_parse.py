@@ -59,6 +59,7 @@ def test_single_line_record():
     assert assess.year == "2020-2021"
     assert assess.semester == "1"
     assert assess.au7 == 7.0
+    assert assess.score_raw == "92.0 4.00"
 
 
 def test_pass_fail_excluded_from_gpa_flag():
