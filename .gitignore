@@ -1,3 +1,10 @@
 *_extracted_text.txt
 *_converted.csv
+*_summary.json
 .DS_Store
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+*.pyc
